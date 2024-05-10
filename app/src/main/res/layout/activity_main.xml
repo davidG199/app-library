@@ -1,19 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/background_image1">>
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Registrar Libro"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Título del Libro"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/etBookTitle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="Título del Libro" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Autor"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/etAuthor"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="Autor" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Género"
+        android:textAlignment="center" />
+
+    <Spinner
+        android:id="@+id/etGenre"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="Género" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Año de Publicación"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/etYear"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="Año de Publicación"
+        android:inputType="number" />
+
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Número de Páginas"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/etPages"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:hint="Número de Páginas"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/ibSaveBook"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_save_24" />
+
+        <ImageButton
+            android:id="@+id/ibSearchBook"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_search_24" />
+
+        <ImageButton
+            android:id="@+id/ibEditBook"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_edit_24" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/ibDeleteBook"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24" />
+
+        <ImageButton
+            android:id="@+id/ibListBooks"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_list_24" />
+
+    </LinearLayout>
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prueba"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:src="@drawable/logolibromed"
+        android:layout_marginBottom="50dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
