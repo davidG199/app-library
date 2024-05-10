@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "945872592424",
+    "project_id": "app-library-dd475",
+    "storage_bucket": "app-library-dd475.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945872592424:android:763e78646845c1ea3b5f1d",
+        "android_client_info": {
+          "package_name": "AndroidManifest.xml"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzjKL2wO23Vm3czgH9_vU7vhC5nF8u6Hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:945872592424:android:d853a50d89a603093b5f1d",
+        "android_client_info": {
+          "package_name": "com.example.app_library"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzjKL2wO23Vm3czgH9_vU7vhC5nF8u6Hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
