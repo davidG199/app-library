@@ -15,20 +15,17 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    EditText idHolder, fullname, email, password,phone;
-    Spinner role;
+    EditText bookTitle, autorBook,year,numberPages;
+    Spinner genero;
     ImageButton ibSave, ibSearch, ibEdit, ibDelete, ibList;
     TextView tvMessage;
 
@@ -42,29 +39,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        idHolder = findViewById(R.id.etidHolder);
-        fullname = findViewById(R.id.etfullName);
-        email = findViewById(R.id.etEmail);
-        password = findViewById(R.id.etPassword);
-        phone = findViewById(R.id.etPhone);
-        role = findViewById(R.id.spRole);
+        bookTitle = findViewById(R.id.etBookTitle);
+        autorBook = findViewById(R.id.etAuthor);
+        year = findViewById(R.id.etYear);
+        numberPages = findViewById(R.id.etPages);
+        genero = findViewById(R.id.etGenre);
         tvMessage = findViewById(R.id.tvMessage);
-        ibSave = findViewById(R.id.ibSave);
-        ibSearch = findViewById(R.id.ibSearch);
-        ibEdit = findViewById(R.id.ibEdit);
-        ibDelete = findViewById(R.id.ibDelete);
-        ibList = findViewById(R.id.ibList);
+        ibSave = findViewById(R.id.ibSaveBook);
+        ibSearch = findViewById(R.id.ibSearchBook);
+        ibEdit = findViewById(R.id.ibEditBook);
+        ibDelete = findViewById(R.id.ibDeleteBook);
+        ibList = findViewById(R.id.ibListBooks);
         // Llenar el spinner con los valores: Administrador y Usuario
-        ArrayAdapter adpRoles = new ArrayAdapter(this,android.R.layout.simple_list_item_checked,roles);
-        role.setAdapter(adpRoles);
+        ArrayAdapter adpGeneros = new ArrayAdapter(this,android.R.layout.simple_list_item_checked,generos);
+        genero.setAdapter(adpGeneros);
         //Eventos de los botones
+
+        //evento para buscar algun libro
         ibSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public  void onClick(View v){
-                if (!idHolder.getText().toString().isEmpty()){
-                    //Buscar el idHolder
-                    db.collection("user")
-                            .whereEqualTo("idholder", idHolder.getText().toString())
+                if (!bookTitle.getText().toString().isEmpty()){
+                    //Buscar el titulo del libro
+                    db.collection("book")
+                            .whereEqualTo("bookTitle", bookTitle.getText().toString())
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
@@ -73,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
                                         if(!task.getResult().isEmpty()){
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 idAutomatic = document.getId();
-                                                fullname.setText(document.getString("fullname"));
-                                                email.setText(document.getString("email"));
-                                                phone.setText(document.getString("phone"));
+                                                autorBook.setText(document.getString("autorBook"));
+                                                year.setText(document.getString("year"));
+                                                numberPages.setText(document.getString("numberPages"));
                                             }
                                         }
                                         else{
                                             tvMessage.setTextColor(Color.RED);
-                                            tvMessage.setText("Identificacion de usuario no existe...");
+                                            tvMessage.setText("Identificacion de libro no existe...");
                                         }
                                     }
                                 }
@@ -89,45 +87,44 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     tvMessage.setTextColor(Color.RED);
-                    tvMessage.setText("Debe ingresar el id del usuario que desea buscar");
+                    tvMessage.setText("Debe ingresar el titulo del libro que desea buscar");
                 }
             }
         });
+
+        //evento para guardar los libros
         ibSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String mIdHolder = idHolder.getText().toString();
-                String mFullName = fullname.getText().toString();
-                String mEmail = email.getText().toString();
-                String mPassword = password.getText().toString();
-                String mPhone = phone.getText().toString();
-                if (checkData(mIdHolder,mFullName,mEmail,mPassword,mPhone)){
+                String mBookTitle = bookTitle.getText().toString();
+                String mAutorBook = autorBook.getText().toString();
+                String mYear = year.getText().toString();
+                String mNumberPages = numberPages.getText().toString();
+                if (checkData(mBookTitle,mAutorBook,mYear,mNumberPages)){
                     //Crear objeto con la info del documento y sus campos
-                    Map<String, Object> oUser =  new HashMap<>();
-                    oUser.put("idholder", mIdHolder);
-                    oUser.put("fullname", mFullName);
-                    oUser.put("email", mEmail);
-                    oUser.put("password", mPassword);
-                    oUser.put("phone", mPhone);
-                    if (role.getSelectedItem().equals("Administrador")){
-                        oUser.put("role", 1);
+                    Map<String, Object> oBook =  new HashMap<>();
+                    oBook.put("titleBook", mBookTitle);
+                    oBook.put("fullname", mAutorBook);
+                    oBook.put("Year", mYear);
+                    oBook.put("numberPages", mNumberPages);
+                    if (genero.getSelectedItem().equals("accion")){
+                        oBook.put("genero", 1);
                     }else {
-                        oUser.put("role", 0);
+                        oBook.put("genero", 0);
                     }
-                    // Guardar el documento (registro) en la coleccion (tabla) user
-                    db.collection("user")
-                            .add(oUser)
+                    // Guardar el documento (registro) en la coleccion (tabla) book
+                    db.collection("book")
+                            .add(oBook)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
                                     tvMessage.setTextColor(Color.GREEN);
-                                    tvMessage.setText("Usuario agregado correctamente");
-                                    idHolder.setText("");
-                                    fullname.setText("");
-                                    email.setText("");
-                                    password.setText("");
-                                    phone.setText("");
-                                    idHolder.requestFocus();
+                                    tvMessage.setText("libro agregado correctamente");
+                                    bookTitle.setText("");
+                                    autorBook.setText("");
+                                    year.setText("");
+                                    numberPages.setText("");
+                                    bookTitle.requestFocus();
                                 }
                             });
 
@@ -143,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkData(String mIdHolder, String mFullName, String mEmail, String mPassword, String mPhone) {
-        return (!mIdHolder.isEmpty() && !mFullName.isEmpty() && !mEmail.isEmpty() && !mPassword.isEmpty() && !mPhone.isEmpty());
+    private boolean checkData(String mBookTitle, String mAutorBook, String mYear, String mNumberPages) {
+        return (!mBookTitle.isEmpty() && !mAutorBook.isEmpty() && !mYear.isEmpty() && !mNumberPages.isEmpty());
     }
 }
