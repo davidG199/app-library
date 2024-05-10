@@ -1,4 +1,4 @@
-package com.example.appbanco;
+package com.example.app_library;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     ImageButton ibSave, ibSearch, ibEdit, ibDelete, ibList;
     TextView tvMessage;
 
-    String[] roles = { "Administrador", "Usuario"};
+    //arreglo para el spinner de los generos de los libros
+    String[] generos = { "Accion", "Ciencia fición", "Comedia", "Romance"};
     //Instanciar la clase de FirebaseFirestore para esta clase MainActivity
     FirebaseFirestore db =  FirebaseFirestore.getInstance();
     //Definision de variable idAutomatic para utilizarla en el borrado y actualizacion del documento
