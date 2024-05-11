@@ -125,9 +125,13 @@ public class MainActivity extends AppCompatActivity {
                     oBook.put("Year", mYear);
                     oBook.put("numberPages", mNumberPages);
                     if (genero.getSelectedItem().equals("accion")) {
-                        oBook.put("genero", 1);
-                    } else {
-                        oBook.put("genero", 0);
+                        oBook.put("genero", "accion");
+                    } else if(genero.getSelectedItem().equals("Ciencia ficción")){
+                        oBook.put("genero", "Ciencia ficción");
+                    }else if(genero.getSelectedItem().equals("Comedia")){
+                        oBook.put("genero", "Comedia");
+                    }else{
+                        oBook.put("genero", "Romance");
                     }
                     // Guardar los libros
                     db.collection("book")
