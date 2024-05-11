@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_image1">>
+    android:background="@drawable/background_image1">
 
     <TextView
         android:layout_width="match_parent"
@@ -15,13 +15,18 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="Registrar Libro"
+        android:textSize="22sp"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Título del Libro"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etBookTitle"
@@ -36,7 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Autor"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etAuthor"
@@ -51,7 +59,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Género"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/etGenre"
@@ -66,7 +77,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Año de Publicación"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etYear"
@@ -82,7 +96,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Número de Páginas"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etPages"
@@ -102,26 +119,87 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:gravity="center">
 
-        <ImageButton
-            android:id="@+id/ibSaveBook"
+        <FrameLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_save_24" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="2dp">
 
-        <ImageButton
-            android:id="@+id/ibSearchBook"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_search_24" />
 
-        <ImageButton
-            android:id="@+id/ibEditBook"
+            <Button
+                android:id="@+id/btnSaveBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7B1FA2"
+                android:textColor="#FFFFFF"
+                android:text=""
+                android:stateListAnimator="@null" />
+
+            <ImageButton
+                android:id="@+id/ibSaveBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/baseline_save_24"
+                app:tint="#FFFFFF" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_edit_24" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="2dp">
+
+            <Button
+                android:id="@+id/btnSearchBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7B1FA2"
+                android:textColor="#FFFFFF"
+                android:text=""
+                android:stateListAnimator="@null" />
+
+            <ImageButton
+                android:id="@+id/ibSearchBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/baseline_search_24"
+                app:tint="#FFFFFF" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="2dp">
+
+            <Button
+                android:id="@+id/btnEditBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7B1FA2"
+                android:textColor="#FFFFFF"
+                android:text=""
+                android:stateListAnimator="@null" />
+
+            <ImageButton
+                android:id="@+id/ibEditBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/baseline_edit_24"
+                app:tint="#FFFFFF" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -129,19 +207,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginBottom="10dp">
 
-        <ImageButton
-            android:id="@+id/ibDeleteBook"
+        <FrameLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_delete_24" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="2dp">
 
-        <ImageButton
-            android:id="@+id/ibListBooks"
+            <Button
+                android:id="@+id/btnDeleteBook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7B1FA2"
+                android:textColor="#FFFFFF"
+                android:text=""
+                android:stateListAnimator="@null" />
+
+            <ImageButton
+                android:id="@+id/ibDeleteBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/baseline_delete_24"
+                app:tint="#FFFFFF" />
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_list_24" />
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="2dp">
+
+            <Button
+                android:id="@+id/btnListBooks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#7B1FA2"
+                android:textColor="#FFFFFF"
+                android:text=""
+                android:stateListAnimator="@null" />
+
+            <ImageButton
+                android:id="@+id/ibListBooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/baseline_list_24"
+                app:tint="#FFFFFF" />
+
+        </FrameLayout>
 
     </LinearLayout>
 
