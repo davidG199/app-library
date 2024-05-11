@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar Firebase
         FirebaseApp.initializeApp(this);
 
         bookTitle = findViewById(R.id.etBookTitle);
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         genero.setAdapter(adpGeneros);
 
         //Eventos de los botones
-        // Evento para buscar un libro por su título
+        // Evento para buscar libros por el título
         ibSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
                                             autorBook.setText(document.getString("author"));
                                             year.setText(document.getString("Year"));
                                             numberPages.setText(document.getString("numberPages"));
-                                            // Se encontró el libro, no se necesita seguir buscando
                                             return;
                                         }
-                                        // Si no se encontró ningún libro, mostrar un mensaje
                                         tvMessage.setTextColor(Color.RED);
                                         tvMessage.setTypeface(null, Typeface.BOLD);
                                         tvMessage.setTextSize(18);
@@ -121,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 String mYear = year.getText().toString();
                 String mNumberPages = numberPages.getText().toString();
                 if (checkData(mBookTitle,mAutorBook,mYear,mNumberPages)) {
-                    //Crear objeto con la info del documento y sus campos
+                    //Crear un objeto con todos sus campos
                     Map<String, Object> oBook =  new HashMap<>();
                     oBook.put("titleBook", mBookTitle);
                     oBook.put("author", mAutorBook);
@@ -132,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         oBook.put("genero", 0);
                     }
-                    // Guardar el documento (registro) en la coleccion (tabla) book
+                    // Guardar los libros
                     db.collection("book")
                             .add(oBook)
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
