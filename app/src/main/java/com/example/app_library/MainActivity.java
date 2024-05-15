@@ -88,6 +88,19 @@ public class MainActivity extends AppCompatActivity {
                                             autorBook.setText(document.getString("author"));
                                             year.setText(document.getString("Year"));
                                             numberPages.setText(document.getString("numberPages"));
+
+                                            // Muestra el género del libro
+                                            int genreIndex = document.getLong("genero").intValue();
+                                            genero.setSelection(genreIndex);
+
+                                            tvMessage.setTextColor(Color.GREEN);
+                                            tvMessage.setTypeface(null, Typeface.BOLD);
+                                            tvMessage.setTextSize(18);
+                                            tvMessage.setText("El libro ha sido encontrado.");
+                                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvMessage.getLayoutParams();
+                                            params.setMargins(0, 50, 0, -65);
+                                            tvMessage.setLayoutParams(params);
+
                                             return;
                                         }
                                         tvMessage.setTextColor(Color.RED);
@@ -109,44 +122,72 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //evento para guardar los libros
         ibSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mBookTitle = bookTitle.getText().toString();
-                String mAutorBook = autorBook.getText().toString();
-                String mYear = year.getText().toString();
-                String mNumberPages = numberPages.getText().toString();
-                if (checkData(mBookTitle,mAutorBook,mYear,mNumberPages)) {
-                    //Crear un objeto con todos sus campos
-                    Map<String, Object> oBook =  new HashMap<>();
-                    oBook.put("titleBook", mBookTitle);
-                    oBook.put("author", mAutorBook);
-                    oBook.put("Year", mYear);
-                    oBook.put("numberPages", mNumberPages);
-                    if (genero.getSelectedItem().equals("accion")) {
-                        oBook.put("genero", 1);
-                    } else {
-                        oBook.put("genero", 0);
-                    }
-                    // Guardar los libros
+                final String mBookTitle = bookTitle.getText().toString();
+                final String mAutorBook = autorBook.getText().toString();
+                final String mYear = year.getText().toString();
+                final String mNumberPages = numberPages.getText().toString();
+                if (checkData(mBookTitle, mAutorBook, mYear, mNumberPages)) {
+                    // Verificar si ya existe el libro en la base de datos
                     db.collection("book")
-                            .add(oBook)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            .whereEqualTo("titleBook", mBookTitle)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    tvMessage.setTextColor(Color.WHITE);
-                                    tvMessage.setTypeface(null, Typeface.BOLD);
-                                    tvMessage.setTextSize(24);
-                                    ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvMessage.getLayoutParams();
-                                    params.setMargins(0, 40, 0, -65);
-                                    tvMessage.setLayoutParams(params);
-                                    tvMessage.setText("libro agregado correctamente");
-                                    bookTitle.setText("");
-                                    autorBook.setText("");
-                                    year.setText("");
-                                    numberPages.setText("");
-                                    bookTitle.requestFocus();
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        if (task.getResult().isEmpty()) {
+                                            // Si no existe el título, guardar el libro
+                                            Map<String, Object> oBook =  new HashMap<>();
+                                            oBook.put("titleBook", mBookTitle);
+                                            oBook.put("author", mAutorBook);
+                                            oBook.put("Year", mYear);
+                                            oBook.put("numberPages", mNumberPages);
+                                            if (genero.getSelectedItem().equals("accion")) {
+                                                oBook.put("genero", 0);
+                                            } else if(genero.getSelectedItem().equals("Ciencia ficción")){
+                                                oBook.put("genero", 1);
+                                            }else if(genero.getSelectedItem().equals("Comedia")){
+                                                oBook.put("genero", 2);
+                                            }else{
+                                                oBook.put("genero", 3);
+                                            }
+                                            // Guardar el libro
+                                            db.collection("book")
+                                                    .add(oBook)
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentReference documentReference) {
+                                                            tvMessage.setTextColor(Color.WHITE);
+                                                            tvMessage.setTypeface(null, Typeface.BOLD);
+                                                            tvMessage.setTextSize(24);
+                                                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvMessage.getLayoutParams();
+                                                            params.setMargins(0, 40, 0, -65);
+                                                            tvMessage.setLayoutParams(params);
+                                                            tvMessage.setText("Libro agregado correctamente");
+                                                            bookTitle.setText("");
+                                                            autorBook.setText("");
+                                                            year.setText("");
+                                                            numberPages.setText("");
+                                                            bookTitle.requestFocus();
+                                                        }
+                                                    });
+                                        } else {
+                                            // Si hay documentos con el mismo título, mostrar un mensaje de error
+                                            tvMessage.setTextColor(Color.RED);
+                                            tvMessage.setText("El título del libro ya existe en la base de datos.");
+                                            tvMessage.setTextColor(Color.RED);
+                                            tvMessage.setTypeface(null, Typeface.BOLD);
+                                            tvMessage.setTextSize(18);
+                                            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) tvMessage.getLayoutParams();
+                                            params.setMargins(0, 50, 0, -65);
+                                            tvMessage.setLayoutParams(params);
+                                        }
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
                                 }
                             });
                 } else {
@@ -155,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private boolean checkData(String mBookTitle, String mAutorBook, String mYear, String mNumberPages) {
